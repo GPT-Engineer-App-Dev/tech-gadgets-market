@@ -1,5 +1,6 @@
-import { Box, Container, Flex, Heading, Text, VStack, Image, SimpleGrid, Link, HStack } from "@chakra-ui/react";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import { Box, Container, Flex, Heading, Text, VStack, Image, SimpleGrid, Link, HStack, Input, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
+import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa";
+import { useState } from "react";
 
 const products = [
   {
@@ -29,11 +30,38 @@ const products = [
 ];
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <Container maxW="container.xl" p={0}>
       <Flex as="nav" bg="blue.800" color="white" p={4} justifyContent="space-between" alignItems="center">
         <Heading size="lg">ElectroShop</Heading>
-        <HStack spacing={4}>
+        <HStack spacing={4} alignItems="center">
+          <InputGroup maxW="400px" ml="4">
+            <Input
+              placeholder="Search for products"
+              value={searchQuery}
+              onChange={handleSearch}
+              bg="white"
+              color="black"
+            />
+            <InputRightElement>
+              <IconButton
+                aria-label="Search"
+                icon={<FaSearch />}
+                onClick={() => {}}
+                bg="blue.800"
+                color="white"
+              />
+            </InputRightElement>
+          </InputGroup>
           <Link href="#" display="flex" alignItems="center">
             <FaUser />
             <Text ml={2}>Account</Text>
@@ -50,7 +78,7 @@ const Index = () => {
           Featured Products
         </Heading>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Box key={product.id} borderWidth="1px" borderRadius="lg" overflow="hidden">
               <Image src={product.image} alt={product.name} />
               <Box p={6}>
