@@ -1,18 +1,74 @@
-// Update this page (the content is just a fallback if you fail and example)
-// Use chakra-ui
-import { Container, Text, VStack } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Text, VStack, Image, SimpleGrid, Link, HStack } from "@chakra-ui/react";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 
-// Example of using react-icons
-// import { FaRocket } from "react-icons/fa";
-// <IconButton aria-label="Add" icon={<FaRocket />} size="lg" />; // IconButton would also have to be imported from chakra
+const products = [
+  {
+    id: 1,
+    name: "Smartphone",
+    price: "$699",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 2,
+    name: "Laptop",
+    price: "$999",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 3,
+    name: "Headphones",
+    price: "$199",
+    image: "https://via.placeholder.com/150",
+  },
+  {
+    id: 4,
+    name: "Smartwatch",
+    price: "$299",
+    image: "https://via.placeholder.com/150",
+  },
+];
 
 const Index = () => {
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Text fontSize="2xl">Your Blank Canvas</Text>
-        <Text>Chat with the agent to start making edits.</Text>
-      </VStack>
+    <Container maxW="container.xl" p={0}>
+      <Flex as="nav" bg="blue.800" color="white" p={4} justifyContent="space-between" alignItems="center">
+        <Heading size="lg">ElectroShop</Heading>
+        <HStack spacing={4}>
+          <Link href="#" display="flex" alignItems="center">
+            <FaUser />
+            <Text ml={2}>Account</Text>
+          </Link>
+          <Link href="#" display="flex" alignItems="center">
+            <FaShoppingCart />
+            <Text ml={2}>Cart</Text>
+          </Link>
+        </HStack>
+      </Flex>
+
+      <Box as="main" py={10}>
+        <Heading as="h2" size="xl" mb={6} textAlign="center">
+          Featured Products
+        </Heading>
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={10}>
+          {products.map((product) => (
+            <Box key={product.id} borderWidth="1px" borderRadius="lg" overflow="hidden">
+              <Image src={product.image} alt={product.name} />
+              <Box p={6}>
+                <Heading as="h3" size="md" mb={2}>
+                  {product.name}
+                </Heading>
+                <Text fontSize="xl" color="blue.800">
+                  {product.price}
+                </Text>
+              </Box>
+            </Box>
+          ))}
+        </SimpleGrid>
+      </Box>
+
+      <Box as="footer" bg="blue.800" color="white" py={6} textAlign="center">
+        <Text>&copy; 2023 ElectroShop. All rights reserved.</Text>
+      </Box>
     </Container>
   );
 };
